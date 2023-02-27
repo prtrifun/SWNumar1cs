@@ -1,2 +1,2 @@
 # SWNumar1cs
-Star Wars Fann App
+Star Wars Fan App
