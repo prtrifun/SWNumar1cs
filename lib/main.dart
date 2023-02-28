@@ -5,6 +5,10 @@ import 'package:kiwi/kiwi.dart';
 import 'package:swnumar1cs/injection_container.dart';
 import 'package:swnumar1cs/services/films_service.dart';
 import 'package:swnumar1cs/services/people_service.dart';
+import 'package:swnumar1cs/services/planets_service.dart';
+import 'package:swnumar1cs/services/species_service.dart';
+import 'package:swnumar1cs/services/starships_service.dart';
+import 'package:swnumar1cs/services/vehicles_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +17,10 @@ void main() {
     initKiwi();
     KiwiContainer().resolve<FilmsService>();
     KiwiContainer().resolve<PeopleService>();
+    KiwiContainer().resolve<PlanetsService>();
+    KiwiContainer().resolve<SpeciesService>();
+    KiwiContainer().resolve<StarshipsService>();
+    KiwiContainer().resolve<VehiclesService>();
 
     runApp(const MyApp());
   }, (error, stackTrace) {
