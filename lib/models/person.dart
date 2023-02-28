@@ -1,8 +1,3 @@
-import 'package:swnumar1cs/models/film.dart';
-import 'package:swnumar1cs/models/starship.dart';
-import 'package:swnumar1cs/models/specie.dart';
-import 'package:swnumar1cs/models/vehicle.dart';
-
 class Person {
   final String? name;
   final String? height;
@@ -13,10 +8,10 @@ class Person {
   final String? birthYear;
   final String? gender;
   final String? homeworld;
-  final List<Film>? films;
-  final List<Specie>? species;
-  final List<Vehicle>? vehicles;
-  final List<Starship>? starships;
+  final List<String> films;
+  final List<String> species;
+  final List<String> vehicles;
+  final List<String> starships;
   final String? url;
 
   const Person({
@@ -29,14 +24,42 @@ class Person {
     this.birthYear,
     this.gender,
     this.homeworld,
-    this.films,
-    this.species,
-    this.vehicles,
-    this.starships,
+    this.films = const [],
+    this.species = const [],
+    this.vehicles = const [],
+    this.starships = const [],
     this.url,
   });
 
   factory Person.fromJson(Map<String, dynamic> data) {
+    final List<String> films = [];
+    if (data['films'] != null) {
+      for (String film in data['films']) {
+        films.add(film);
+      }
+    }
+
+    final List<String> species = [];
+    if (data['species'] != null) {
+      for (String specie in data['species']) {
+        species.add(specie);
+      }
+    }
+
+    final List<String> vehicles = [];
+    if (data['vehicles'] != null) {
+      for (String vehicle in data['vehicles']) {
+        vehicles.add(vehicle);
+      }
+    }
+
+    final List<String> starships = [];
+    if (data['starships'] != null) {
+      for (String starship in data['starships']) {
+        starships.add(starship);
+      }
+    }
+
     return Person(
         name: data['name'],
         height: data['height'],
@@ -47,6 +70,10 @@ class Person {
         birthYear: data['birth_year'],
         gender: data['gender'],
         homeworld: data['homeworld'],
-        url: data['']);
+        films: films,
+        species: species,
+        vehicles: vehicles,
+        starships: starships,
+        url: data['url']);
   }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swnumar1cs/models/film.dart';
-import 'package:swnumar1cs/models/person.dart';
 
 class Vehicle {
   final String? name;
@@ -15,8 +13,8 @@ class Vehicle {
   final String? consumables;
   @protected
   final String? vehicleClass;
-  final List<Person>? pilots;
-  final List<Film>? films;
+  final List<String> pilots;
+  final List<String> films;
   final String? url;
 
   const Vehicle({
@@ -31,12 +29,26 @@ class Vehicle {
     this.cargoCapacity,
     this.consumables,
     this.vehicleClass,
-    this.pilots,
-    this.films,
+    this.pilots = const [],
+    this.films = const [],
     this.url,
   });
 
   factory Vehicle.fromJson(Map<String, dynamic> data) {
+    final List<String> pilots = [];
+    if (data['pilots'] != null) {
+      for (String pilot in data['pilots']) {
+        pilots.add(pilot);
+      }
+    }
+
+    final List<String> films = [];
+    if (data['films'] != null) {
+      for (String film in data['films']) {
+        films.add(film);
+      }
+    }
+
     return Vehicle(
       name: data['name'],
       model: data['model'],
@@ -49,6 +61,8 @@ class Vehicle {
       cargoCapacity: data['cargo_capacity'],
       consumables: data['consumables'],
       vehicleClass: data['vehicle_class'],
+      pilots: pilots,
+      films: films,
       url: data['url'],
     );
   }

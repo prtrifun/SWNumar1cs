@@ -1,7 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
+import 'package:swnumar1cs/injection_container.dart';
+import 'package:swnumar1cs/services/films_service.dart';
+import 'package:swnumar1cs/services/people_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runZonedGuarded(() async {
+    initKiwi();
+    KiwiContainer().resolve<FilmsService>();
+    KiwiContainer().resolve<PeopleService>();
+
+    runApp(const MyApp());
+  }, (error, stackTrace) {
+    //  TODO: log and handle error
+  });
 }
 
 class MyApp extends StatelessWidget {

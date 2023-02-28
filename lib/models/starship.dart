@@ -1,5 +1,3 @@
-import 'package:swnumar1cs/models/film.dart';
-import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/models/vehicle.dart';
 
 class Starship extends Vehicle {
@@ -21,8 +19,8 @@ class Starship extends Vehicle {
     this.hyperdriveRating,
     this.mglt,
     this.starshipClass,
-    List<Person>? pilots,
-    List<Film>? films,
+    List<String> pilots = const [],
+    List<String> films = const [],
     String? url,
   }) : super(
           name: name,

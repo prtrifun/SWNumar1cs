@@ -1,9 +1,3 @@
-import 'package:swnumar1cs/models/person.dart';
-import 'package:swnumar1cs/models/planet.dart';
-import 'package:swnumar1cs/models/starship.dart';
-import 'package:swnumar1cs/models/specie.dart';
-import 'package:swnumar1cs/models/vehicle.dart';
-
 class Film {
   final String? title;
   final int? episodeID;
@@ -11,11 +5,11 @@ class Film {
   final String? director;
   final String? producer;
   final String? releaseDate;
-  final List<Person>? characters;
-  final List<Planet>? planets;
-  final List<Starship>? starships;
-  final List<Vehicle>? vehicles;
-  final List<Specie>? species;
+  final List<String> characters;
+  final List<String> planets;
+  final List<String> starships;
+  final List<String> vehicles;
+  final List<String> species;
   final String? url;
 
   const Film({
@@ -25,15 +19,50 @@ class Film {
     this.director,
     this.producer,
     this.releaseDate,
-    this.characters,
-    this.planets,
-    this.starships,
-    this.vehicles,
-    this.species,
+    this.characters = const [],
+    this.planets = const [],
+    this.starships = const [],
+    this.vehicles = const [],
+    this.species = const [],
     this.url,
   });
 
   factory Film.fromJson(Map<String, dynamic> data) {
+    final List<String> characters = [];
+    if (data['characters'] != null) {
+      for (String character in data['characters']) {
+        characters.add(character);
+      }
+    }
+
+    final List<String> planets = [];
+    if (data['planets'] != null) {
+      for (String planet in data['planets']) {
+        planets.add(planet);
+      }
+    }
+
+    final List<String> starships = [];
+    if (data['starships'] != null) {
+      for (String starship in data['starships']) {
+        starships.add(starship);
+      }
+    }
+
+    final List<String> vehicles = [];
+    if (data['vehicles'] != null) {
+      for (String vehicle in data['vehicles']) {
+        vehicles.add(vehicle);
+      }
+    }
+
+    final List<String> species = [];
+    if (data['species'] != null) {
+      for (String specie in data['species']) {
+        species.add(specie);
+      }
+    }
+
     return Film(
       title: data['title'],
       episodeID: data['episode_id'],
@@ -41,6 +70,11 @@ class Film {
       director: data['director'],
       producer: data['producer'],
       releaseDate: data['release_date'],
+      characters: characters,
+      planets: planets,
+      starships: starships,
+      vehicles: vehicles,
+      species: species,
       url: data['url'],
     );
   }

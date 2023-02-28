@@ -1,6 +1,3 @@
-import 'package:swnumar1cs/models/film.dart';
-import 'package:swnumar1cs/models/person.dart';
-
 class Planet {
   final String? name;
   final String? rotationPeriod;
@@ -11,8 +8,8 @@ class Planet {
   final String? terrain;
   final String? surfaceWater;
   final String? population;
-  final List<Person>? residents;
-  final List<Film>? films;
+  final List<String> residents;
+  final List<String> films;
   final String? url;
 
   const Planet({
@@ -25,12 +22,26 @@ class Planet {
     this.terrain,
     this.surfaceWater,
     this.population,
-    this.residents,
-    this.films,
+    this.residents = const [],
+    this.films = const [],
     this.url,
   });
 
   factory Planet.fromJson(Map<String, dynamic> data) {
+    final List<String> residents = [];
+    if (data['residents'] != null) {
+      for (String resident in data['residents']) {
+        residents.add(resident);
+      }
+    }
+
+    final List<String> films = [];
+    if (data['films'] != null) {
+      for (String film in data['films']) {
+        films.add(film);
+      }
+    }
+
     return Planet(
       name: data['name'],
       rotationPeriod: data['rotation_period'],
@@ -41,6 +52,8 @@ class Planet {
       terrain: data['terrain'],
       surfaceWater: data['surface_water'],
       population: data['population'],
+      residents: residents,
+      films: films,
       url: data['url'],
     );
   }

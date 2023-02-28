@@ -1,6 +1,3 @@
-import 'package:swnumar1cs/models/film.dart';
-import 'package:swnumar1cs/models/person.dart';
-
 class Specie {
   final String? name;
   final String? classification;
@@ -12,8 +9,8 @@ class Specie {
   final String? averageLifespan;
   final String? homeworld;
   final String? language;
-  final List<Person>? people;
-  final List<Film>? films;
+  final List<String> people;
+  final List<String> films;
   final String? url;
 
   const Specie({
@@ -27,12 +24,26 @@ class Specie {
     this.averageLifespan,
     this.homeworld,
     this.language,
-    this.people,
-    this.films,
+    this.people = const [],
+    this.films = const [],
     this.url,
   });
 
   factory Specie.fromJson(Map<String, dynamic> data) {
+    final List<String> people = [];
+    if (data['people'] != null) {
+      for (String person in data['people']) {
+        people.add(person);
+      }
+    }
+
+    final List<String> films = [];
+    if (data['films'] != null) {
+      for (String film in data['films']) {
+        films.add(film);
+      }
+    }
+
     return Specie(
       name: data['name'],
       classification: data['classification'],
@@ -44,6 +55,8 @@ class Specie {
       averageLifespan: data['average_lifespan'],
       homeworld: data['homeworld'],
       language: data['language'],
+      people: people,
+      films: films,
       url: data['url'],
     );
   }
