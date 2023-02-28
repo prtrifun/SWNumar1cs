@@ -33,6 +33,8 @@ dependencies:
     sdk: flutter
 
   http: ^0.13.5
+  path_provider: ^2.0.13
+  go_router: ^6.2.0
   provider: ^6.0.5
   kiwi: ^4.1.0
   fuzzy:
