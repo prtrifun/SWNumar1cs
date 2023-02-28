@@ -3,7 +3,7 @@ import 'package:swnumar1cs/models/vehicle.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 
 class VehiclesService {
-  static const _url = 'https://swapi.dev/api/starships';
+  static const _url = 'https://swapi.dev/api/vehicles';
 
   final List<Vehicle> _vehicles = [];
 
