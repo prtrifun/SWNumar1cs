@@ -7,24 +7,25 @@ import 'package:swnumar1cs/models/specie.dart';
 import 'package:swnumar1cs/models/starship.dart';
 import 'package:swnumar1cs/models/vehicle.dart';
 import 'package:swnumar1cs/providers/film_details_provider.dart';
+import 'package:swnumar1cs/providers/person_details_provider.dart';
 import 'package:swnumar1cs/widgets/cell.dart';
 
-class FilmDetails extends StatelessWidget {
-  static const pageName = 'film_details';
+class PersonDetails extends StatelessWidget {
+  static const pageName = 'person_details';
 
-  final Film film;
+  final Person person;
 
-  const FilmDetails({required this.film, super.key});
+  const PersonDetails({required this.person, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<FilmDetailsProvider>(
-      create: (context) => FilmDetailsProvider(film),
+    return ChangeNotifierProvider<PersonDetailsProvider>(
+      create: (context) => PersonDetailsProvider(person),
       builder: (context, _) {
-        final provider = context.read<FilmDetailsProvider>();
+        final provider = context.read<PersonDetailsProvider>();
         return Scaffold(
           appBar: AppBar(
-            title: Text(provider.film.title ?? ''),
+            title: Text(provider.person.name ?? ''),
           ),
           body: SafeArea(
             child: ListView(
@@ -35,45 +36,41 @@ class FilmDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('episode: ${provider.film.episodeID}'),
+                      Text('height: ${provider.person.height}'),
                       const SizedBox(height: 8),
-                      Text('openingCrawl:\n\n${provider.film.openingCrawl}'),
+                      Text('mass: ${provider.person.mass}'),
                       const SizedBox(height: 8),
-                      Text('director: ${provider.film.director}'),
+                      Text('hair color: ${provider.person.hairColor}'),
                       const SizedBox(height: 8),
-                      Text('producer: ${provider.film.producer}'),
+                      Text('skin color: ${provider.person.skinColor}'),
                       const SizedBox(height: 8),
-                      Text('releaseDate: ${provider.film.releaseDate}'),
+                      Text('eye color: ${provider.person.eyeColor}'),
+                      const SizedBox(height: 8),
+                      Text('birth year: ${provider.person.birthYear}'),
+                      const SizedBox(height: 8),
+                      Text('gender: ${provider.person.gender}'),
+                      const SizedBox(height: 8),
+                      Text('homeworld: ${provider.planet?.name ?? ''}'),
                     ],
                   ),
                 ),
                 ExpansionTile(
-                  title: Text('characters'),
+                  title: Text('films'),
                   children: [
-                    for (Person person in provider.characters)
+                    for (Film film in provider.films)
                       Cell(
                         onPressed: () {},
-                        title: person.name,
+                        title: film.title,
                       )
                   ],
                 ),
                 ExpansionTile(
-                  title: Text('planets'),
+                  title: Text('species'),
                   children: [
-                    for (Planet planet in provider.planets)
+                    for (Specie specie in provider.species)
                       Cell(
                         onPressed: () {},
-                        title: planet.name,
-                      )
-                  ],
-                ),
-                ExpansionTile(
-                  title: Text('starships'),
-                  children: [
-                    for (Starship starship in provider.starships)
-                      Cell(
-                        onPressed: () {},
-                        title: starship.name,
+                        title: specie.name,
                       )
                   ],
                 ),
@@ -88,12 +85,12 @@ class FilmDetails extends StatelessWidget {
                   ],
                 ),
                 ExpansionTile(
-                  title: Text('species'),
+                  title: Text('starships'),
                   children: [
-                    for (Specie specie in provider.species)
+                    for (Starship starship in provider.starships)
                       Cell(
                         onPressed: () {},
-                        title: specie.name,
+                        title: starship.name,
                       )
                   ],
                 ),

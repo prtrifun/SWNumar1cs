@@ -33,14 +33,14 @@ class PlanetsService {
     }
   }
 
-  Planet? _getPlanet({String? url}) {
+  Planet? getPlanet({String? url}) {
     return _planets.firstWhereOrNull((element) => element.url == url);
   }
 
   List<Planet> getPlanets({required List<String?> urls}) {
     final List<Planet> planets = [];
     for (String? url in urls) {
-      final planet = _getPlanet(url: url);
+      final planet = getPlanet(url: url);
       if (planet != null) {
         planets.add(planet);
       }

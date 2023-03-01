@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/pages/films.dart';
+import 'package:swnumar1cs/pages/people.dart';
+import 'package:swnumar1cs/pages/planets.dart';
 
 class MainPage extends StatelessWidget {
   static const pageName = 'mainPage';
@@ -22,11 +24,15 @@ class MainPage extends StatelessWidget {
               child: const Text(kFilms),
             ),
             FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(People.pageName);
+              },
               child: const Text(kPeople),
             ),
             FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(Planets.pageName);
+              },
               child: const Text(kPlanets),
             ),
             FilledButton(
