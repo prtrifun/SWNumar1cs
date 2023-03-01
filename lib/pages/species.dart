@@ -15,7 +15,7 @@ class Species extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(kPlanets),
+        title: const Text(kSpecies),
       ),
       body: ChangeNotifierProvider<SpeciesProvider>(
         create: (context) => SpeciesProvider(),

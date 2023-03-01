@@ -5,6 +5,7 @@ import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/models/planet.dart';
 import 'package:swnumar1cs/models/specie.dart';
 import 'package:swnumar1cs/models/starship.dart';
+import 'package:swnumar1cs/models/vehicle.dart';
 import 'package:swnumar1cs/pages/film_details.dart';
 import 'package:swnumar1cs/pages/films.dart';
 import 'package:swnumar1cs/pages/main_page.dart';
@@ -16,6 +17,8 @@ import 'package:swnumar1cs/pages/specie_details.dart';
 import 'package:swnumar1cs/pages/species.dart';
 import 'package:swnumar1cs/pages/starship_details.dart';
 import 'package:swnumar1cs/pages/starships.dart';
+import 'package:swnumar1cs/pages/vehicle_details.dart';
+import 'package:swnumar1cs/pages/vehicles.dart';
 
 class RouterService {
   late final GoRouter _goRouter;
@@ -142,6 +145,27 @@ class RouterService {
             return _buildMaterialPage(
               key: state.pageKey,
               child: StarshipDetails(starship: starship),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/${Vehicles.pageName}',
+          name: Vehicles.pageName,
+          pageBuilder: (context, state) {
+            return _buildMaterialPage(
+              key: state.pageKey,
+              child: const Vehicles(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/${VehicleDetails.pageName}',
+          name: VehicleDetails.pageName,
+          pageBuilder: (context, state) {
+            final vehicle = state.extra as Vehicle;
+            return _buildMaterialPage(
+              key: state.pageKey,
+              child: VehicleDetails(vehicle: vehicle),
             );
           },
         ),

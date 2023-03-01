@@ -11,7 +11,6 @@ class Vehicle {
   final String? passengers;
   final String? cargoCapacity;
   final String? consumables;
-  @protected
   final String? vehicleClass;
   final List<String> pilots;
   final List<String> films;
