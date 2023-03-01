@@ -3,6 +3,7 @@ import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/models/film.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
+import 'package:collection/collection.dart';
 
 class FilmsService {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
@@ -30,5 +31,20 @@ class FilmsService {
     for (Map<String, dynamic> film in films) {
       _films.add(Film.fromJson(film));
     }
+  }
+
+  Film? _getFilm({String? url}) {
+    return _films.firstWhereOrNull((element) => element.url == url);
+  }
+
+  List<Film> getFilms({required List<String?> urls}) {
+    final List<Film> films = [];
+    for (String? url in urls) {
+      final film = _getFilm(url: url);
+      if (film != null) {
+        films.add(film);
+      }
+    }
+    return films;
   }
 }

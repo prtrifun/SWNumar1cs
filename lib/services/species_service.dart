@@ -3,6 +3,7 @@ import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/models/specie.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
+import 'package:collection/collection.dart';
 
 class SpeciesService {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
@@ -30,5 +31,20 @@ class SpeciesService {
     for (Map<String, dynamic> specie in species) {
       _species.add(Specie.fromJson(specie));
     }
+  }
+
+  Specie? _getSpecie({String? url}) {
+    return _species.firstWhereOrNull((element) => element.url == url);
+  }
+
+  List<Specie> getSpecies({required List<String?> urls}) {
+    final List<Specie> species = [];
+    for (String? url in urls) {
+      final specie = _getSpecie(url: url);
+      if (specie != null) {
+        species.add(specie);
+      }
+    }
+    return species;
   }
 }

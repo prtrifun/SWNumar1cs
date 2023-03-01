@@ -3,6 +3,7 @@ import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
+import 'package:collection/collection.dart';
 
 class PeopleService {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
@@ -30,5 +31,20 @@ class PeopleService {
     for (Map<String, dynamic> person in people) {
       _people.add(Person.fromJson(person));
     }
+  }
+
+  Person? _getPerson({String? url}) {
+    return _people.firstWhereOrNull((element) => element.url == url);
+  }
+
+  List<Person> getPeople({required List<String?> urls}) {
+    final List<Person> people = [];
+    for (String? url in urls) {
+      final person = _getPerson(url: url);
+      if (person != null) {
+        people.add(person);
+      }
+    }
+    return people;
   }
 }

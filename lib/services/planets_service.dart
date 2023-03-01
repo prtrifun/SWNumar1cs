@@ -3,6 +3,7 @@ import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/models/planet.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
+import 'package:collection/collection.dart';
 
 class PlanetsService {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
@@ -30,5 +31,20 @@ class PlanetsService {
     for (Map<String, dynamic> planet in planets) {
       _planets.add(Planet.fromJson(planet));
     }
+  }
+
+  Planet? _getPlanet({String? url}) {
+    return _planets.firstWhereOrNull((element) => element.url == url);
+  }
+
+  List<Planet> getPlanets({required List<String?> urls}) {
+    final List<Planet> planets = [];
+    for (String? url in urls) {
+      final planet = _getPlanet(url: url);
+      if (planet != null) {
+        planets.add(planet);
+      }
+    }
+    return planets;
   }
 }

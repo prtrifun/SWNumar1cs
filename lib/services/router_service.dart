@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swnumar1cs/models/film.dart';
+import 'package:swnumar1cs/pages/film_details.dart';
 import 'package:swnumar1cs/pages/films.dart';
 import 'package:swnumar1cs/pages/main_page.dart';
 
@@ -33,6 +35,17 @@ class RouterService {
             return _buildMaterialPage(
               key: state.pageKey,
               child: const Films(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/${FilmDetails.pageName}',
+          name: FilmDetails.pageName,
+          pageBuilder: (context, state) {
+            final film = state.extra as Film;
+            return _buildMaterialPage(
+              key: state.pageKey,
+              child: FilmDetails(film: film),
             );
           },
         ),

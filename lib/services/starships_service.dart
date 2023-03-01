@@ -3,6 +3,7 @@ import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/models/starship.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
+import 'package:collection/collection.dart';
 
 class StarshipsService {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
@@ -30,5 +31,20 @@ class StarshipsService {
     for (Map<String, dynamic> starship in starships) {
       _starships.add(Starship.fromJson(starship));
     }
+  }
+
+  Starship? _getStarship({String? url}) {
+    return _starships.firstWhereOrNull((element) => element.url == url);
+  }
+
+  List<Starship> getStarships({required List<String?> urls}) {
+    final List<Starship> starships = [];
+    for (String? url in urls) {
+      final starship = _getStarship(url: url);
+      if (starship != null) {
+        starships.add(starship);
+      }
+    }
+    return starships;
   }
 }

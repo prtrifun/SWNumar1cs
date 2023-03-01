@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:swnumar1cs/constants.dart';
+import 'package:swnumar1cs/pages/film_details.dart';
 import 'package:swnumar1cs/providers/films_provider.dart';
+import 'package:swnumar1cs/widgets/cell.dart';
 
 class Films extends StatelessWidget {
   static const pageName = 'films';
@@ -32,7 +35,12 @@ class Films extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: provider.films.length,
                       itemBuilder: (context, index) {
-                        return Text(provider.films[index].title ?? '');
+                        return Cell(
+                          onPressed: () {
+                            context.pushNamed(FilmDetails.pageName, extra: provider.films[index]);
+                          },
+                          title: provider.films[index].title,
+                        );
                       },
                     ),
                   ),
