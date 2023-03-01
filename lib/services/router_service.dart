@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:swnumar1cs/models/film.dart';
 import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/models/planet.dart';
+import 'package:swnumar1cs/models/specie.dart';
 import 'package:swnumar1cs/pages/film_details.dart';
 import 'package:swnumar1cs/pages/films.dart';
 import 'package:swnumar1cs/pages/main_page.dart';
@@ -10,6 +11,8 @@ import 'package:swnumar1cs/pages/people.dart';
 import 'package:swnumar1cs/pages/person_details.dart';
 import 'package:swnumar1cs/pages/planet_details.dart';
 import 'package:swnumar1cs/pages/planets.dart';
+import 'package:swnumar1cs/pages/specie_details.dart';
+import 'package:swnumar1cs/pages/species.dart';
 
 class RouterService {
   late final GoRouter _goRouter;
@@ -94,6 +97,27 @@ class RouterService {
             return _buildMaterialPage(
               key: state.pageKey,
               child: PlanetDetails(planet: planet),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/${Species.pageName}',
+          name: Species.pageName,
+          pageBuilder: (context, state) {
+            return _buildMaterialPage(
+              key: state.pageKey,
+              child: const Species(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/${SpecieDetails.pageName}',
+          name: SpecieDetails.pageName,
+          pageBuilder: (context, state) {
+            final specie = state.extra as Specie;
+            return _buildMaterialPage(
+              key: state.pageKey,
+              child: SpecieDetails(specie: specie),
             );
           },
         ),
