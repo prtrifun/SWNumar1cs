@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Vehicle {
   final String? name;
   final String? model;

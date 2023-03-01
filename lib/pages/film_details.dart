@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:swnumar1cs/models/film.dart';
 import 'package:swnumar1cs/models/person.dart';
@@ -6,6 +7,11 @@ import 'package:swnumar1cs/models/planet.dart';
 import 'package:swnumar1cs/models/specie.dart';
 import 'package:swnumar1cs/models/starship.dart';
 import 'package:swnumar1cs/models/vehicle.dart';
+import 'package:swnumar1cs/pages/person_details.dart';
+import 'package:swnumar1cs/pages/planet_details.dart';
+import 'package:swnumar1cs/pages/specie_details.dart';
+import 'package:swnumar1cs/pages/starship_details.dart';
+import 'package:swnumar1cs/pages/vehicle_details.dart';
 import 'package:swnumar1cs/providers/film_details_provider.dart';
 import 'package:swnumar1cs/widgets/cell.dart';
 
@@ -25,6 +31,17 @@ class FilmDetails extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(provider.film.title ?? ''),
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.home,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+              )
+            ],
           ),
           body: SafeArea(
             child: ListView(
@@ -52,7 +69,9 @@ class FilmDetails extends StatelessWidget {
                   children: [
                     for (Person person in provider.characters)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(PersonDetails.pageName, extra: person);
+                        },
                         title: person.name,
                       )
                   ],
@@ -62,7 +81,9 @@ class FilmDetails extends StatelessWidget {
                   children: [
                     for (Planet planet in provider.planets)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(PlanetDetails.pageName, extra: planet);
+                        },
                         title: planet.name,
                       )
                   ],
@@ -72,7 +93,9 @@ class FilmDetails extends StatelessWidget {
                   children: [
                     for (Starship starship in provider.starships)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(StarshipDetails.pageName, extra: starship);
+                        },
                         title: starship.name,
                       )
                   ],
@@ -82,7 +105,9 @@ class FilmDetails extends StatelessWidget {
                   children: [
                     for (Vehicle vehicle in provider.vehicles)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(VehicleDetails.pageName, extra: vehicle);
+                        },
                         title: vehicle.name,
                       )
                   ],
@@ -92,7 +117,9 @@ class FilmDetails extends StatelessWidget {
                   children: [
                     for (Specie specie in provider.species)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(SpecieDetails.pageName, extra: specie);
+                        },
                         title: specie.name,
                       )
                   ],

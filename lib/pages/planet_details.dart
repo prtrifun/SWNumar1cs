@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:swnumar1cs/models/film.dart';
 import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/models/planet.dart';
+import 'package:swnumar1cs/pages/film_details.dart';
+import 'package:swnumar1cs/pages/person_details.dart';
 import 'package:swnumar1cs/providers/planet_details_provider.dart';
 import 'package:swnumar1cs/widgets/cell.dart';
 
@@ -22,6 +25,17 @@ class PlanetDetails extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(provider.planet.name ?? ''),
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.home,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+              )
+            ],
           ),
           body: SafeArea(
             child: ListView(
@@ -55,7 +69,9 @@ class PlanetDetails extends StatelessWidget {
                   children: [
                     for (Person person in provider.residents)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(PersonDetails.pageName, extra: person);
+                        },
                         title: person.name,
                       )
                   ],
@@ -65,7 +81,9 @@ class PlanetDetails extends StatelessWidget {
                   children: [
                     for (Film film in provider.films)
                       Cell(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(FilmDetails.pageName, extra: film);
+                        },
                         title: film.title,
                       )
                   ],
