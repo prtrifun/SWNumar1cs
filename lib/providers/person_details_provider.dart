@@ -7,7 +7,6 @@ import 'package:swnumar1cs/models/specie.dart';
 import 'package:swnumar1cs/models/starship.dart';
 import 'package:swnumar1cs/models/vehicle.dart';
 import 'package:swnumar1cs/services/films_service.dart';
-import 'package:swnumar1cs/services/people_service.dart';
 import 'package:swnumar1cs/services/planets_service.dart';
 import 'package:swnumar1cs/services/species_service.dart';
 import 'package:swnumar1cs/services/starships_service.dart';

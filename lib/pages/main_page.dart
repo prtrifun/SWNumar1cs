@@ -5,6 +5,7 @@ import 'package:swnumar1cs/pages/films.dart';
 import 'package:swnumar1cs/pages/people.dart';
 import 'package:swnumar1cs/pages/planets.dart';
 import 'package:swnumar1cs/pages/species.dart';
+import 'package:swnumar1cs/pages/starships.dart';
 
 class MainPage extends StatelessWidget {
   static const pageName = 'mainPage';
@@ -43,7 +44,9 @@ class MainPage extends StatelessWidget {
               child: const Text(kSpecies),
             ),
             FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(Starships.pageName);
+              },
               child: const Text(kStarships),
             ),
             FilledButton(

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuzzy/fuzzy.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:swnumar1cs/models/person.dart';
-import 'package:swnumar1cs/models/planet.dart';
 import 'package:swnumar1cs/models/specie.dart';
-import 'package:swnumar1cs/services/people_service.dart';
-import 'package:swnumar1cs/services/planets_service.dart';
 import 'package:swnumar1cs/services/species_service.dart';
 
 class SpeciesProvider extends ChangeNotifier {

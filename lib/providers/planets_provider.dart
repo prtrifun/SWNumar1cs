@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuzzy/fuzzy.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/models/planet.dart';
-import 'package:swnumar1cs/services/people_service.dart';
 import 'package:swnumar1cs/services/planets_service.dart';
 
 class PlanetsProvider extends ChangeNotifier {

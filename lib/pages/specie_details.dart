@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swnumar1cs/models/film.dart';
 import 'package:swnumar1cs/models/person.dart';
-import 'package:swnumar1cs/models/planet.dart';
 import 'package:swnumar1cs/models/specie.dart';
-import 'package:swnumar1cs/models/starship.dart';
-import 'package:swnumar1cs/models/vehicle.dart';
-import 'package:swnumar1cs/providers/film_details_provider.dart';
-import 'package:swnumar1cs/providers/person_details_provider.dart';
-import 'package:swnumar1cs/providers/planet_details_provider.dart';
 import 'package:swnumar1cs/providers/specie_details_provider.dart';
 import 'package:swnumar1cs/widgets/cell.dart';
 

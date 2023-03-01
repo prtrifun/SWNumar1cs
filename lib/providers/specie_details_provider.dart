@@ -4,15 +4,9 @@ import 'package:swnumar1cs/models/film.dart';
 import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/models/planet.dart';
 import 'package:swnumar1cs/models/specie.dart';
-import 'package:swnumar1cs/models/starship.dart';
-import 'package:swnumar1cs/models/vehicle.dart';
-import 'package:swnumar1cs/pages/people.dart';
 import 'package:swnumar1cs/services/films_service.dart';
 import 'package:swnumar1cs/services/people_service.dart';
 import 'package:swnumar1cs/services/planets_service.dart';
-import 'package:swnumar1cs/services/species_service.dart';
-import 'package:swnumar1cs/services/starships_service.dart';
-import 'package:swnumar1cs/services/vehicles_service.dart';
 
 class SpecieDetailsProvider extends ChangeNotifier {
   final _planetsService = KiwiContainer().resolve<PlanetsService>();

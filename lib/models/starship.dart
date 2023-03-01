@@ -39,6 +39,20 @@ class Starship extends Vehicle {
         );
 
   factory Starship.fromJson(Map<String, dynamic> data) {
+    final List<String> pilots = [];
+    if (data['pilots'] != null) {
+      for (String pilot in data['pilots']) {
+        pilots.add(pilot);
+      }
+    }
+
+    final List<String> films = [];
+    if (data['films'] != null) {
+      for (String film in data['films']) {
+        films.add(film);
+      }
+    }
+
     return Starship(
       name: data['name'],
       model: data['model'],
@@ -53,6 +67,8 @@ class Starship extends Vehicle {
       hyperdriveRating: data['hyperdrive_rating'],
       mglt: data['MGLT'],
       starshipClass: data['starship_class'],
+      pilots: pilots,
+      films: films,
       url: data['url'],
     );
   }
