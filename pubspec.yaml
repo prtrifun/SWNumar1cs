@@ -41,7 +41,7 @@ dependencies:
     git:
       url: https://github.com/prtrifun/fuzzy.git
   collection: ^1.17.0
-
+  easy_localization: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +59,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/localization/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

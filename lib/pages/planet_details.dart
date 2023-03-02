@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +66,7 @@ class PlanetDetails extends StatelessWidget {
                   ),
                 ),
                 ExpansionTile(
-                  title: Text('residents'),
+                  title: Text('residents'.tr()),
                   children: [
                     for (Person person in provider.residents)
                       Cell(
@@ -77,7 +78,7 @@ class PlanetDetails extends StatelessWidget {
                   ],
                 ),
                 ExpansionTile(
-                  title: Text('films'),
+                  title: Text('films'.tr()),
                   children: [
                     for (Film film in provider.films)
                       Cell(

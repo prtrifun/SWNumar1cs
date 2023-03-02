@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,7 @@ class PersonDetails extends StatelessWidget {
                   ),
                 ),
                 ExpansionTile(
-                  title: const Text('films'),
+                  title: Text('films'.tr()),
                   children: [
                     for (Film film in provider.films)
                       Cell(
@@ -81,7 +82,7 @@ class PersonDetails extends StatelessWidget {
                   ],
                 ),
                 ExpansionTile(
-                  title: const Text('species'),
+                  title: Text('species'.tr()),
                   children: [
                     for (Specie specie in provider.species)
                       Cell(
@@ -93,7 +94,7 @@ class PersonDetails extends StatelessWidget {
                   ],
                 ),
                 ExpansionTile(
-                  title: const Text('vehicles'),
+                  title: Text('vehicles'.tr()),
                   children: [
                     for (Vehicle vehicle in provider.vehicles)
                       Cell(
@@ -105,7 +106,7 @@ class PersonDetails extends StatelessWidget {
                   ],
                 ),
                 ExpansionTile(
-                  title: const Text('starships'),
+                  title: Text('starships'.tr()),
                   children: [
                     for (Starship starship in provider.starships)
                       Cell(

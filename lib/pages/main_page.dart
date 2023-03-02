@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/pages/films.dart';
 import 'package:swnumar1cs/pages/people.dart';
 import 'package:swnumar1cs/pages/planets.dart';
@@ -24,37 +24,37 @@ class MainPage extends StatelessWidget {
               onPressed: () {
                 context.pushNamed(Films.pageName);
               },
-              child: const Text(kFilms),
+              child: Text('films'.tr()),
             ),
             FilledButton(
               onPressed: () {
                 context.pushNamed(People.pageName);
               },
-              child: const Text(kPeople),
+              child: Text('people'.tr()),
             ),
             FilledButton(
               onPressed: () {
                 context.pushNamed(Planets.pageName);
               },
-              child: const Text(kPlanets),
+              child: Text('planets'.tr()),
             ),
             FilledButton(
               onPressed: () {
                 context.pushNamed(Species.pageName);
               },
-              child: const Text(kSpecies),
+              child: Text('species'.tr()),
             ),
             FilledButton(
               onPressed: () {
                 context.pushNamed(Starships.pageName);
               },
-              child: const Text(kStarships),
+              child: Text('starships'.tr()),
             ),
             FilledButton(
               onPressed: () {
                 context.pushNamed(Vehicles.pageName);
               },
-              child: const Text(kVehicles),
+              child: Text('vehicles'.tr()),
             ),
           ],
         ),

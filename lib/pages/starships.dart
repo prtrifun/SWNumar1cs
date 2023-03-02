@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:swnumar1cs/constants.dart';
 import 'package:swnumar1cs/pages/starship_details.dart';
 import 'package:swnumar1cs/providers/starships_provider.dart';
 import 'package:swnumar1cs/widgets/cell.dart';
@@ -15,7 +15,7 @@ class Starships extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(kStarships),
+        title: Text('starships'.tr()),
       ),
       body: ChangeNotifierProvider<StarshipsProvider>(
         create: (context) => StarshipsProvider(),
