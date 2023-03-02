@@ -12,11 +12,11 @@ class VehiclesService {
 
   List<Vehicle> get vehicles => List.unmodifiable(_vehicles);
 
-  VehiclesService() {
-    _fetchVehicles();
+  Future<void> init() async {
+    await _fetchVehicles();
   }
 
-  void _fetchVehicles() async {
+  Future<void> _fetchVehicles() async {
     final localData = await _localDataService.readLocalJson(kVehicles);
     if (localData != null) {
       _loadVehicles(localData);

@@ -12,11 +12,11 @@ class SpeciesService {
 
   List<Specie> get species => List.unmodifiable(_species);
 
-  SpeciesService() {
-    _fetchSpecies();
+  Future<void> init() async {
+    await _fetchSpecies();
   }
 
-  void _fetchSpecies() async {
+  Future<void> _fetchSpecies() async {
     final localData = await _localDataService.readLocalJson(kSpecies);
     if (localData != null) {
       _loadSpecies(localData);

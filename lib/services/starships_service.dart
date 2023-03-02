@@ -12,11 +12,11 @@ class StarshipsService {
 
   List<Starship> get starships => List.unmodifiable(_starships);
 
-  StarshipsService() {
-    _fetchStarships();
+  Future<void> init() async {
+    await _fetchStarships();
   }
 
-  void _fetchStarships() async {
+  Future<void> _fetchStarships() async {
     final localData = await _localDataService.readLocalJson(kStarships);
     if (localData != null) {
       _loadStarships(localData);

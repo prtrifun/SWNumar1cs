@@ -12,11 +12,11 @@ class FilmsService {
 
   List<Film> get films => List.unmodifiable(_films);
 
-  FilmsService() {
-    _fetchFilms();
+  Future<void> init() async {
+    await _fetchFilms();
   }
 
-  void _fetchFilms() async {
+  Future<void> _fetchFilms() async {
     final localData = await _localDataService.readLocalJson(kFilms);
     if (localData != null) {
       _loadFilms(localData);

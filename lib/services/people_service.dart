@@ -12,11 +12,11 @@ class PeopleService {
 
   List<Person> get people => List.unmodifiable(_people);
 
-  PeopleService() {
-    _fetchPeople();
+  Future<void> init() async {
+    await _fetchPeople();
   }
 
-  void _fetchPeople() async {
+  Future<void> _fetchPeople() async {
     final localData = await _localDataService.readLocalJson(kPeople);
     if (localData != null) {
       _loadPeople(localData);

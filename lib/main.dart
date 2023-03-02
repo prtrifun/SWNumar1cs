@@ -16,12 +16,12 @@ void main() {
 
   runZonedGuarded(() async {
     initKiwi();
-    KiwiContainer().resolve<FilmsService>();
-    KiwiContainer().resolve<PeopleService>();
-    KiwiContainer().resolve<PlanetsService>();
-    KiwiContainer().resolve<SpeciesService>();
-    KiwiContainer().resolve<StarshipsService>();
-    KiwiContainer().resolve<VehiclesService>();
+    await KiwiContainer().resolve<FilmsService>().init();
+    await KiwiContainer().resolve<PeopleService>().init();
+    await KiwiContainer().resolve<PlanetsService>().init();
+    await KiwiContainer().resolve<SpeciesService>().init();
+    await KiwiContainer().resolve<StarshipsService>().init();
+    await KiwiContainer().resolve<VehiclesService>().init();
 
     runApp(const MyApp());
   }, (error, stackTrace) {

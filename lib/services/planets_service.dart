@@ -12,11 +12,11 @@ class PlanetsService {
 
   List<Planet> get planets => List.unmodifiable(_planets);
 
-  PlanetsService() {
-    _fetchPlanets();
+  Future<void> init() async {
+    await _fetchPlanets();
   }
 
-  void _fetchPlanets() async {
+  Future<void> _fetchPlanets() async {
     final localData = await _localDataService.readLocalJson(kPlanets);
     if (localData != null) {
       _loadPlanets(localData);
