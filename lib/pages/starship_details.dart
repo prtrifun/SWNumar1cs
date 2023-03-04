@@ -35,7 +35,7 @@ class StarshipDetails extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
-              )
+              ),
             ],
           ),
           body: SafeArea(

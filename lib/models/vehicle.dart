@@ -1,4 +1,6 @@
-class Vehicle {
+import 'package:swnumar1cs/models/resource.dart';
+
+class Vehicle extends Resource {
   final String? name;
   final String? model;
   final String? manufacturer;
@@ -63,4 +65,13 @@ class Vehicle {
       url: data['url'],
     );
   }
+
+  @override
+  String getWeightedKey1() => name ?? '';
+
+  @override
+  String getWeightedKey2() => manufacturer ?? '';
+
+  @override
+  String getWeightedKey3() => model ?? '';
 }

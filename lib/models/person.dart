@@ -1,4 +1,6 @@
-class Person {
+import 'package:swnumar1cs/models/resource.dart';
+
+class Person extends Resource {
   final String? name;
   final String? height;
   final String? mass;
@@ -76,4 +78,13 @@ class Person {
         starships: starships,
         url: data['url']);
   }
+
+  @override
+  String getWeightedKey1() => name ?? '';
+
+  @override
+  String getWeightedKey2() => height ?? '';
+
+  @override
+  String getWeightedKey3() => birthYear ?? '';
 }

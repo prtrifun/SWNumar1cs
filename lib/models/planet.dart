@@ -1,4 +1,6 @@
-class Planet {
+import 'package:swnumar1cs/models/resource.dart';
+
+class Planet extends Resource {
   final String? name;
   final String? rotationPeriod;
   final String? orbitalPeriod;
@@ -57,4 +59,13 @@ class Planet {
       url: data['url'],
     );
   }
+
+  @override
+  String getWeightedKey1() => name ?? '';
+
+  @override
+  String getWeightedKey2() => population ?? '';
+
+  @override
+  String getWeightedKey3() => terrain ?? '';
 }

@@ -1,4 +1,6 @@
-class Film {
+import 'package:swnumar1cs/models/resource.dart';
+
+class Film extends Resource {
   final String? title;
   final int? episodeID;
   final String? openingCrawl;
@@ -78,4 +80,13 @@ class Film {
       url: data['url'],
     );
   }
+
+  @override
+  String getWeightedKey1() => title ?? '';
+
+  @override
+  String getWeightedKey2() => director ?? '';
+
+  @override
+  String getWeightedKey3() => producer ?? '';
 }

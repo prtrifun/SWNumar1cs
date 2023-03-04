@@ -2,13 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:swnumar1cs/injection_container.dart';
-import 'package:swnumar1cs/services/films_service.dart';
-import 'package:swnumar1cs/services/people_service.dart';
-import 'package:swnumar1cs/services/planets_service.dart';
 import 'package:swnumar1cs/services/router_service.dart';
-import 'package:swnumar1cs/services/species_service.dart';
-import 'package:swnumar1cs/services/starships_service.dart';
-import 'package:swnumar1cs/services/vehicles_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return MaterialApp.router(
-            title: 'Star Wars Fan App',
+            title: 'app_title'.tr(),
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),

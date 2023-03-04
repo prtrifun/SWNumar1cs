@@ -72,4 +72,13 @@ class Starship extends Vehicle {
       url: data['url'],
     );
   }
+
+  @override
+  String getWeightedKey1() => name ?? '';
+
+  @override
+  String getWeightedKey2() => starshipClass ?? '';
+
+  @override
+  String getWeightedKey3() => model ?? '';
 }

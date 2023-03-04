@@ -1,4 +1,6 @@
-class Specie {
+import 'package:swnumar1cs/models/resource.dart';
+
+class Specie extends Resource {
   final String? name;
   final String? classification;
   final String? designation;
@@ -60,4 +62,13 @@ class Specie {
       url: data['url'],
     );
   }
+
+  @override
+  String getWeightedKey1() => name ?? '';
+
+  @override
+  String getWeightedKey2() => classification ?? '';
+
+  @override
+  String getWeightedKey3() => language ?? '';
 }
