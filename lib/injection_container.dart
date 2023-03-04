@@ -12,7 +12,7 @@ import 'package:swnumar1cs/services/vehicles_service.dart';
 void initKiwi() {
   KiwiContainer().registerFactory((s) => ApiService());
   KiwiContainer().registerFactory((s) => LocalDataService());
-  KiwiContainer().registerSingleton((container) => RouterService());
+  KiwiContainer().registerSingleton((s) => RouterService());
   KiwiContainer().registerSingleton((s) => FilmsService());
   KiwiContainer().registerSingleton((s) => PeopleService());
   KiwiContainer().registerSingleton((s) => PlanetsService());

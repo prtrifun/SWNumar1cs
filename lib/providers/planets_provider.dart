@@ -12,8 +12,23 @@ class PlanetsProvider extends ChangeNotifier {
   late Fuzzy<Planet> _fuse;
 
   List<Planet> get planets => _planets;
+  PlanetsServiceEvent get event => _planetsService.event;
 
   PlanetsProvider() {
+    if (event == PlanetsServiceEvent.ready) {
+      _initFuse();
+    } else {
+      _planetsService.subscribe(_listenToPlanetsService);
+    }
+  }
+
+  @override
+  void dispose() {
+    _planetsService.unsubscribe(_listenToPlanetsService);
+    super.dispose();
+  }
+
+  void _initFuse() {
     _planets.addAll(_planetsService.planets);
     _fuse = Fuzzy(
       _planetsService.planets,
@@ -50,6 +65,24 @@ class PlanetsProvider extends ChangeNotifier {
     );
   }
 
+  void _listenToPlanetsService(PlanetsServiceEvent event, List<dynamic> params) {
+    switch (event) {
+      case PlanetsServiceEvent.loading:
+        // display loading indicator
+        break;
+      case PlanetsServiceEvent.ready:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _planetsService.unsubscribe(_listenToPlanetsService);
+        });
+        _initFuse();
+        break;
+      case PlanetsServiceEvent.error:
+        // display error message
+        break;
+    }
+    notifyListeners();
+  }
+
   void search(String text) {
     _planets.clear();
     final result = _fuse.search(text);
@@ -57,5 +90,9 @@ class PlanetsProvider extends ChangeNotifier {
       _planets.add(r.item);
     }
     notifyListeners();
+  }
+
+  void tryAgain() {
+    _planetsService.fetchPlanets();
   }
 }

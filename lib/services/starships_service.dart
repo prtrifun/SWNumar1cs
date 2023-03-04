@@ -1,29 +1,39 @@
 import 'package:kiwi/kiwi.dart';
 import 'package:swnumar1cs/constants.dart';
+import 'package:swnumar1cs/mixins/subscription_mixin.dart';
 import 'package:swnumar1cs/models/starship.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
 import 'package:collection/collection.dart';
 
-class StarshipsService {
+enum StarshipsServiceEvent { loading, ready, error }
+
+class StarshipsService with SubscriptionMixin<StarshipsServiceEvent> {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
 
   final List<Starship> _starships = [];
+  StarshipsServiceEvent _event = StarshipsServiceEvent.loading;
 
   List<Starship> get starships => List.unmodifiable(_starships);
+  StarshipsServiceEvent get event => _event;
 
-  Future<void> init() async {
-    await _fetchStarships();
+  StarshipsService() {
+    fetchStarships();
   }
 
-  Future<void> _fetchStarships() async {
-    final localData = await _localDataService.readLocalJson(kStarships);
-    if (localData != null) {
-      _loadStarships(localData);
-    } else {
-      final starships = await KiwiContainer().resolve<ApiService>().fetchData(kBaseURL + kStarships);
-      _localDataService.saveLocalJson(kStarships, starships);
-      _loadStarships(starships);
+  void fetchStarships() async {
+    _sendEvent(StarshipsServiceEvent.loading);
+    try {
+      final localData = await _localDataService.readLocalJson(kStarships);
+      if (localData != null) {
+        _loadStarships(localData);
+      } else {
+        final starships = await KiwiContainer().resolve<ApiService>().fetchData(kBaseURL + kStarships);
+        _localDataService.saveLocalJson(kStarships, starships);
+        _loadStarships(starships);
+      }
+    } catch (e) {
+      _sendEvent(StarshipsServiceEvent.error);
     }
   }
 
@@ -31,6 +41,7 @@ class StarshipsService {
     for (Map<String, dynamic> starship in starships) {
       _starships.add(Starship.fromJson(starship));
     }
+    _sendEvent(StarshipsServiceEvent.ready);
   }
 
   Starship? _getStarship({String? url}) {
@@ -46,5 +57,10 @@ class StarshipsService {
       }
     }
     return starships;
+  }
+
+  void _sendEvent(StarshipsServiceEvent event) {
+    _event = event;
+    sendEvent(event);
   }
 }

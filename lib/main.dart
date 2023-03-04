@@ -15,12 +15,6 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   initKiwi();
-  await KiwiContainer().resolve<FilmsService>().init();
-  await KiwiContainer().resolve<PeopleService>().init();
-  await KiwiContainer().resolve<PlanetsService>().init();
-  await KiwiContainer().resolve<SpeciesService>().init();
-  await KiwiContainer().resolve<StarshipsService>().init();
-  await KiwiContainer().resolve<VehiclesService>().init();
 
   runApp(const MyApp());
 }

@@ -12,8 +12,23 @@ class FilmsProvider extends ChangeNotifier {
   late Fuzzy<Film> _fuse;
 
   List<Film> get films => _films;
+  FilmServiceEvent get event => _filmsService.event;
 
   FilmsProvider() {
+    if (event == FilmServiceEvent.ready) {
+      _initFuse();
+    } else {
+      _filmsService.subscribe(_listenToFilmsService);
+    }
+  }
+
+  @override
+  void dispose() {
+    _filmsService.unsubscribe(_listenToFilmsService);
+    super.dispose();
+  }
+
+  void _initFuse() {
     _films.addAll(_filmsService.films);
     _fuse = Fuzzy(
       _filmsService.films,
@@ -50,6 +65,24 @@ class FilmsProvider extends ChangeNotifier {
     );
   }
 
+  void _listenToFilmsService(FilmServiceEvent event, List<dynamic> params) {
+    switch (event) {
+      case FilmServiceEvent.loading:
+        // display loading indicator
+        break;
+      case FilmServiceEvent.ready:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _filmsService.unsubscribe(_listenToFilmsService);
+        });
+        _initFuse();
+        break;
+      case FilmServiceEvent.error:
+        // display error message
+        break;
+    }
+    notifyListeners();
+  }
+
   void search(String text) {
     _films.clear();
     final result = _fuse.search(text);
@@ -57,5 +90,9 @@ class FilmsProvider extends ChangeNotifier {
       _films.add(r.item);
     }
     notifyListeners();
+  }
+
+  void tryAgain() {
+    _filmsService.fetchFilms();
   }
 }

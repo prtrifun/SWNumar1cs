@@ -1,29 +1,39 @@
 import 'package:kiwi/kiwi.dart';
 import 'package:swnumar1cs/constants.dart';
+import 'package:swnumar1cs/mixins/subscription_mixin.dart';
 import 'package:swnumar1cs/models/person.dart';
 import 'package:swnumar1cs/services/api_service.dart';
 import 'package:swnumar1cs/services/local_data_service.dart';
 import 'package:collection/collection.dart';
 
-class PeopleService {
+enum PeopleServiceEvent { loading, ready, error }
+
+class PeopleService with SubscriptionMixin<PeopleServiceEvent> {
   final _localDataService = KiwiContainer().resolve<LocalDataService>();
 
   final List<Person> _people = [];
+  PeopleServiceEvent _event = PeopleServiceEvent.loading;
 
   List<Person> get people => List.unmodifiable(_people);
+  PeopleServiceEvent get event => _event;
 
-  Future<void> init() async {
-    await _fetchPeople();
+  PeopleService() {
+    fetchPeople();
   }
 
-  Future<void> _fetchPeople() async {
-    final localData = await _localDataService.readLocalJson(kPeople);
-    if (localData != null) {
-      _loadPeople(localData);
-    } else {
-      final people = await KiwiContainer().resolve<ApiService>().fetchData(kBaseURL + kPeople);
-      _localDataService.saveLocalJson(kPeople, people);
-      _loadPeople(people);
+  void fetchPeople() async {
+    _sendEvent(PeopleServiceEvent.loading);
+    try {
+      final localData = await _localDataService.readLocalJson(kPeople);
+      if (localData != null) {
+        _loadPeople(localData);
+      } else {
+        final people = await KiwiContainer().resolve<ApiService>().fetchData(kBaseURL + kPeople);
+        _localDataService.saveLocalJson(kPeople, people);
+        _loadPeople(people);
+      }
+    } catch (e) {
+      _sendEvent(PeopleServiceEvent.error);
     }
   }
 
@@ -31,6 +41,7 @@ class PeopleService {
     for (Map<String, dynamic> person in people) {
       _people.add(Person.fromJson(person));
     }
+    _sendEvent(PeopleServiceEvent.ready);
   }
 
   Person? _getPerson({String? url}) {
@@ -46,5 +57,10 @@ class PeopleService {
       }
     }
     return people;
+  }
+
+  void _sendEvent(PeopleServiceEvent event) {
+    _event = event;
+    sendEvent(event);
   }
 }

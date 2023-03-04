@@ -4,7 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:swnumar1cs/pages/person_details.dart';
 import 'package:swnumar1cs/providers/people_provider.dart';
+import 'package:swnumar1cs/services/people_service.dart';
 import 'package:swnumar1cs/widgets/cell.dart';
+import 'package:swnumar1cs/widgets/custom_error_widget.dart';
+import 'package:swnumar1cs/widgets/loading.dart';
 
 class People extends StatelessWidget {
   static const pageName = 'people';
@@ -21,34 +24,49 @@ class People extends StatelessWidget {
         create: (context) => PeopleProvider(),
         child: Consumer<PeopleProvider>(
           builder: (context, provider, _) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  TextFormField(
-                    onChanged: (text) {
-                      provider.search(text);
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: provider.people.length,
-                      itemBuilder: (context, index) {
-                        return Cell(
-                          onPressed: () {
-                            context.pushNamed(PersonDetails.pageName, extra: provider.people[index]);
-                          },
-                          title: provider.people[index].name,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
+            switch (provider.event) {
+              case PeopleServiceEvent.loading:
+                return const Loading();
+              case PeopleServiceEvent.ready:
+                return _peopleWidget(provider);
+              case PeopleServiceEvent.error:
+                return CustomErrorWidget(
+                  onTryAgain: () {
+                    provider.tryAgain();
+                  },
+                );
+            }
           },
         ),
+      ),
+    );
+  }
+
+  Widget _peopleWidget(PeopleProvider provider) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          TextFormField(
+            onChanged: (text) {
+              provider.search(text);
+            },
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: provider.people.length,
+              itemBuilder: (context, index) {
+                return Cell(
+                  onPressed: () {
+                    context.pushNamed(PersonDetails.pageName, extra: provider.people[index]);
+                  },
+                  title: provider.people[index].name,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -12,8 +12,23 @@ class SpeciesProvider extends ChangeNotifier {
   late Fuzzy<Specie> _fuse;
 
   List<Specie> get species => _species;
+  SpeciesServiceEvent get event => _speciesService.event;
 
   SpeciesProvider() {
+    if (event == SpeciesServiceEvent.ready) {
+      _initFuse();
+    } else {
+      _speciesService.subscribe(_listenToSpeciesService);
+    }
+  }
+
+  @override
+  void dispose() {
+    _speciesService.unsubscribe(_listenToSpeciesService);
+    super.dispose();
+  }
+
+  void _initFuse() {
     _species.addAll(_speciesService.species);
     _fuse = Fuzzy(
       _speciesService.species,
@@ -50,6 +65,24 @@ class SpeciesProvider extends ChangeNotifier {
     );
   }
 
+  void _listenToSpeciesService(SpeciesServiceEvent event, List<dynamic> params) {
+    switch (event) {
+      case SpeciesServiceEvent.loading:
+        // display loading indicator
+        break;
+      case SpeciesServiceEvent.ready:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _speciesService.unsubscribe(_listenToSpeciesService);
+        });
+        _initFuse();
+        break;
+      case SpeciesServiceEvent.error:
+        // display error message
+        break;
+    }
+    notifyListeners();
+  }
+
   void search(String text) {
     _species.clear();
     final result = _fuse.search(text);
@@ -57,5 +90,9 @@ class SpeciesProvider extends ChangeNotifier {
       _species.add(r.item);
     }
     notifyListeners();
+  }
+
+  void tryAgain() {
+    _speciesService.fetchSpecies();
   }
 }

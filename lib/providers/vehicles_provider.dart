@@ -12,8 +12,23 @@ class VehiclesProvider extends ChangeNotifier {
   late Fuzzy<Vehicle> _fuse;
 
   List<Vehicle> get vehicle => _vehicles;
+  VehiclesServiceEvent get event => _vehiclesService.event;
 
   VehiclesProvider() {
+    if (event == VehiclesServiceEvent.ready) {
+      _initFuse();
+    } else {
+      _vehiclesService.subscribe(_listenToVehiclesService);
+    }
+  }
+
+  @override
+  void dispose() {
+    _vehiclesService.unsubscribe(_listenToVehiclesService);
+    super.dispose();
+  }
+
+  void _initFuse() {
     _vehicles.addAll(_vehiclesService.vehicles);
     _fuse = Fuzzy(
       _vehiclesService.vehicles,
@@ -50,6 +65,24 @@ class VehiclesProvider extends ChangeNotifier {
     );
   }
 
+  void _listenToVehiclesService(VehiclesServiceEvent event, List<dynamic> params) {
+    switch (event) {
+      case VehiclesServiceEvent.loading:
+        // display loading indicator
+        break;
+      case VehiclesServiceEvent.ready:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _vehiclesService.unsubscribe(_listenToVehiclesService);
+        });
+        _initFuse();
+        break;
+      case VehiclesServiceEvent.error:
+        // display error message
+        break;
+    }
+    notifyListeners();
+  }
+
   void search(String text) {
     _vehicles.clear();
     final result = _fuse.search(text);
@@ -57,5 +90,9 @@ class VehiclesProvider extends ChangeNotifier {
       _vehicles.add(r.item);
     }
     notifyListeners();
+  }
+
+  void tryAgain() {
+    _vehiclesService.fetchVehicles();
   }
 }

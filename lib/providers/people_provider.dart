@@ -12,8 +12,23 @@ class PeopleProvider extends ChangeNotifier {
   late Fuzzy<Person> _fuse;
 
   List<Person> get people => _people;
+  PeopleServiceEvent get event => _peopleService.event;
 
   PeopleProvider() {
+    if (event == PeopleServiceEvent.ready) {
+      _initFuse();
+    } else {
+      _peopleService.subscribe(_listenToPeopleService);
+    }
+  }
+
+  @override
+  void dispose() {
+    _peopleService.unsubscribe(_listenToPeopleService);
+    super.dispose();
+  }
+
+  void _initFuse() {
     _people.addAll(_peopleService.people);
     _fuse = Fuzzy(
       _peopleService.people,
@@ -50,6 +65,24 @@ class PeopleProvider extends ChangeNotifier {
     );
   }
 
+  void _listenToPeopleService(PeopleServiceEvent event, List<dynamic> params) {
+    switch (event) {
+      case PeopleServiceEvent.loading:
+        // display loading indicator
+        break;
+      case PeopleServiceEvent.ready:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _peopleService.unsubscribe(_listenToPeopleService);
+        });
+        _initFuse();
+        break;
+      case PeopleServiceEvent.error:
+        // display error message
+        break;
+    }
+    notifyListeners();
+  }
+
   void search(String text) {
     _people.clear();
     final result = _fuse.search(text);
@@ -57,5 +90,9 @@ class PeopleProvider extends ChangeNotifier {
       _people.add(r.item);
     }
     notifyListeners();
+  }
+
+  void tryAgain() {
+    _peopleService.fetchPeople();
   }
 }

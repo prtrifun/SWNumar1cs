@@ -12,8 +12,23 @@ class StarshipsProvider extends ChangeNotifier {
   late Fuzzy<Starship> _fuse;
 
   List<Starship> get starships => _starships;
+  StarshipsServiceEvent get event => _starshipsService.event;
 
   StarshipsProvider() {
+    if (event == StarshipsServiceEvent.ready) {
+      _initFuse();
+    } else {
+      _starshipsService.subscribe(_listenToStarshipsService);
+    }
+  }
+
+  @override
+  void dispose() {
+    _starshipsService.unsubscribe(_listenToStarshipsService);
+    super.dispose();
+  }
+
+  void _initFuse() {
     _starships.addAll(_starshipsService.starships);
     _fuse = Fuzzy(
       _starshipsService.starships,
@@ -50,6 +65,24 @@ class StarshipsProvider extends ChangeNotifier {
     );
   }
 
+  void _listenToStarshipsService(StarshipsServiceEvent event, List<dynamic> params) {
+    switch (event) {
+      case StarshipsServiceEvent.loading:
+        // display loading indicator
+        break;
+      case StarshipsServiceEvent.ready:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _starshipsService.unsubscribe(_listenToStarshipsService);
+        });
+        _initFuse();
+        break;
+      case StarshipsServiceEvent.error:
+        // display error message
+        break;
+    }
+    notifyListeners();
+  }
+
   void search(String text) {
     _starships.clear();
     final result = _fuse.search(text);
@@ -57,5 +90,9 @@ class StarshipsProvider extends ChangeNotifier {
       _starships.add(r.item);
     }
     notifyListeners();
+  }
+
+  void tryAgain() {
+    _starshipsService.fetchStarships();
   }
 }
