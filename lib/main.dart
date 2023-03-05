@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final router = KiwiContainer().resolve<RouterService>().router;
     return EasyLocalization(
-      supportedLocales: const [Locale('en')],
+      supportedLocales: const [Locale('en'), Locale('sr')],
       fallbackLocale: const Locale('en'),
       useOnlyLangCode: true,
       path: 'assets/localization',
